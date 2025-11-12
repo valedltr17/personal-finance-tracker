@@ -6,6 +6,9 @@ namespace SpenWise.API.DTOs;
 public class UpdateTransactionDto
 {
     [Required]
+    public int Id { get; set; }
+    
+    [Required]
     public DateTime Date { get; set; }
     
     [Required]

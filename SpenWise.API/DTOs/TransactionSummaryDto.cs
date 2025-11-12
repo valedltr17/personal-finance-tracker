@@ -1,0 +1,9 @@
+namespace SpenWise.API.DTOs;
+
+public class TransactionSummaryDto
+{
+    public decimal TotalIncome { get; set; }
+    public decimal TotalExpenses { get; set; }
+    public decimal NetBalance { get; set; }
+    public int TransactionCount { get; set; } 
+}
