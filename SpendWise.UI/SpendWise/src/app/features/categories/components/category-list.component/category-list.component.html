@@ -1,0 +1,46 @@
+<div class="category-list-container">
+  <div class="header">
+    <h2>Categories</h2>
+    <button class="btn btn-primary" routerLink="/categories/new">
+      + Add Category
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    Loading categories...
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error" class="categories-grid">
+    <div *ngFor="let category of categories" class="category-card">
+      <div class="category-header">
+        <div class="category-info">
+          <h3>{{ category.name }}</h3>
+          <span class="category-type">{{ getCategoryTypeName(category.type) }}</span>
+        </div>
+      </div>
+
+      <div class="category-actions">
+        <button
+          class="btn-toggle"
+          [class.inactive]="!category.isActive">
+          <!-- TODO: Add toggle status (click)="toggleStatus(category.id)" -->
+          {{ category.isActive ? 'Active' : 'Inactive' }}
+        </button>
+        <button class="btn-edit" [routerLink]="['/categories/edit', category.id]">
+          Edit
+        </button>
+        <button class="btn-delete" (click)="deleteCategory(category.id)">
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !error && categories.length === 0" class="empty-state">
+    <p>No categories found. Create your first category!</p>
+  </div>
+</div>

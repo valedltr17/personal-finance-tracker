@@ -1,0 +1,20 @@
+<div class="app-container">
+  <header class="app-header">
+    <div class="header-content">
+      <h1>💰 SpendWise</h1>
+      <nav class="main-nav">
+        <a routerLink="/categories" routerLinkActive="active">Categories</a>
+        <a routerLink="/transactions" routerLinkActive="active">Transactions</a>
+        <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="app-footer">
+    <p>&copy; 2025 SpendWise - Track your spending wisely</p>
+  </footer>
+</div>
