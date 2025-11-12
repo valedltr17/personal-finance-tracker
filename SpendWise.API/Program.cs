@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using SpenWise.API.Data;
+using SpendWise.API.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

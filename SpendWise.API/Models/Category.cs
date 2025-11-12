@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace SpenWise.API.Models;
+namespace SpendWise.API.Models;
 
 public class Category
 {

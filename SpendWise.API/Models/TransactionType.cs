@@ -1,4 +1,4 @@
-namespace SpenWise.API.Models;
+namespace SpendWise.API.Models;
 
 public enum TransactionType
 {

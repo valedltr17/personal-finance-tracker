@@ -1,10 +1,13 @@
 using System.ComponentModel.DataAnnotations;
-using SpenWise.API.Models;
+using SpendWise.API.Models;
 
-namespace SpenWise.API.DTOs;
+namespace SpendWise.API.DTOs;
 
-public class CreateTransactionDto
+public class UpdateTransactionDto
 {
+    [Required]
+    public int Id { get; set; }
+    
     [Required]
     public DateTime Date { get; set; }
     

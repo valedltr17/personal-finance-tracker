@@ -1,4 +1,4 @@
-namespace SpenWise.API.DTOs;
+namespace SpendWise.API.DTOs;
 
 public class TransactionDto
 {

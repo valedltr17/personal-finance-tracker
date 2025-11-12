@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SpenWise.API.Data;
+using SpendWise.API.Data;
 
 #nullable disable
 
-namespace SpenWise.API.Migrations
+namespace SpendWise.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -22,7 +22,7 @@ namespace SpenWise.API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("SpenWise.API.Models.Category", b =>
+            modelBuilder.Entity("SpendWise.API.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -43,7 +43,7 @@ namespace SpenWise.API.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("SpenWise.API.Models.Transaction", b =>
+            modelBuilder.Entity("SpendWise.API.Models.Transaction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -78,9 +78,9 @@ namespace SpenWise.API.Migrations
                     b.ToTable("Transactions");
                 });
 
-            modelBuilder.Entity("SpenWise.API.Models.Transaction", b =>
+            modelBuilder.Entity("SpendWise.API.Models.Transaction", b =>
                 {
-                    b.HasOne("SpenWise.API.Models.Category", "Category")
+                    b.HasOne("SpendWise.API.Models.Category", "Category")
                         .WithMany("Transactions")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -89,7 +89,7 @@ namespace SpenWise.API.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("SpenWise.API.Models.Category", b =>
+            modelBuilder.Entity("SpendWise.API.Models.Category", b =>
                 {
                     b.Navigation("Transactions");
                 });

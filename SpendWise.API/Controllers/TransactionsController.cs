@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SpenWise.API.Data;
-using SpenWise.API.DTOs;
-using SpenWise.API.Models;
+using SpendWise.API.Data;
+using SpendWise.API.DTOs;
+using SpendWise.API.Models;
 
-namespace SpenWise.API.Controllers;
+namespace SpendWise.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

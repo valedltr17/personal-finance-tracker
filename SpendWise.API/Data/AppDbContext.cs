@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using SpenWise.API.Models;
+using SpendWise.API.Models;
 
-namespace SpenWise.API.Data;
+namespace SpendWise.API.Data;
 
 public class AppDbContext : DbContext
 {

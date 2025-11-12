@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SpenWise.API.Models;
+namespace SpendWise.API.Models;
 
 public class Transaction
 {
