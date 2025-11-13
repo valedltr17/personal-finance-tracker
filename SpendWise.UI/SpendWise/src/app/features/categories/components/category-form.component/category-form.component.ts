@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CategoryService} from '../../../../core/services';
-import {CategoryType, SaveCategoryRequest, UpdateCategoryRequest} from '../../../../core/models';
+import {SaveCategoryRequest, UpdateCategoryRequest} from '../../../../core/models';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
@@ -17,13 +17,7 @@ export class CategoryFormComponent implements OnInit {
 
   categoryForm = {
     name: '',
-    type: CategoryType.Expense
   };
-
-  categoryTypes = [
-    { value: CategoryType.Income, label: 'Income' },
-    { value: CategoryType.Expense, label: 'Expense' }
-  ];
 
   constructor(
     private categoryService: CategoryService,
@@ -47,8 +41,7 @@ export class CategoryFormComponent implements OnInit {
     this.categoryService.getCategory(this.categoryId).subscribe({
       next: (data) => {
         this.categoryForm = {
-          name: data.name,
-          type: data.type
+          name: data.name
         };
         this.loading = false;
       },
@@ -72,8 +65,7 @@ export class CategoryFormComponent implements OnInit {
     if (this.isEditMode && this.categoryId) {
       const updateDto: UpdateCategoryRequest = {
         id: this.categoryId,
-        name: this.categoryForm.name,
-        type: this.categoryForm.type
+        name: this.categoryForm.name
       };
 
       this.categoryService.updateCategory(updateDto).subscribe({
@@ -88,8 +80,7 @@ export class CategoryFormComponent implements OnInit {
       });
     } else {
       const createDto: SaveCategoryRequest = {
-        name: this.categoryForm.name,
-        type: this.categoryForm.type
+        name: this.categoryForm.name
       };
 
       this.categoryService.createCategory(createDto).subscribe({

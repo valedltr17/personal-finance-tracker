@@ -19,17 +19,10 @@
       <div class="category-header">
         <div class="category-info">
           <h3>{{ category.name }}</h3>
-          <span class="category-type">{{ getCategoryTypeName(category.type) }}</span>
         </div>
       </div>
 
       <div class="category-actions">
-        <button
-          class="btn-toggle"
-          [class.inactive]="!category.isActive">
-          <!-- TODO: Add toggle status (click)="toggleStatus(category.id)" -->
-          {{ category.isActive ? 'Active' : 'Inactive' }}
-        </button>
         <button class="btn-edit" [routerLink]="['/categories/edit', category.id]">
           Edit
         </button>

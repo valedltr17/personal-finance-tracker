@@ -1,11 +1,9 @@
-import { CategoryType } from './category.model';
-
 export interface Transaction {
   id: number;
   amount: number;
   description: string;
   date: string;
-  type: CategoryType;
+  type: TransactionType;
   categoryId: number;
   categoryName: string;
   categoryIcon: string;
@@ -32,4 +30,9 @@ export interface TransactionSummary {
   totalExpenses: number;
   netBalance: number;
   transactionCount: number;
+}
+
+export enum TransactionType {
+  Income = 0,
+  Expense = 1
 }

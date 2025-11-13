@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {
-  CategoryType,
+  TransactionType,
   SaveTransactionRequest,
   Transaction,
   TransactionSummary,
@@ -23,7 +23,7 @@ export class TransactionService {
     startDate?: string,
     endDate?: string,
     categoryId?: string,
-    type?: CategoryType
+    type?: TransactionType
   ): Observable<Transaction[]> {
     let params = new HttpParams();
 

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Category, CategoryType} from '../../../../core/models';
+import {Category} from '../../../../core/models';
 import {CategoryService} from '../../../../core/services';
 
 @Component({
@@ -36,10 +36,6 @@ export class CategoryListComponent implements OnInit {
     });
   }
 
-  getCategoryTypeName(type: CategoryType): string {
-    return type === CategoryType.Income ? 'Income' : 'Expense';
-  }
-
   deleteCategory(id: number): void {
     if (confirm('Are you sure you want to delete this category?')) {
       this.categoryService.deleteCategory(id).subscribe({
@@ -53,16 +49,4 @@ export class CategoryListComponent implements OnInit {
       });
     }
   }
-
-  // toggleStatus(id: number): void {
-  //   this.categoryService.toggleCategoryStatus(id).subscribe({
-  //     next: () => {
-  //       this.loadCategories();
-  //     },
-  //     error: (err) => {
-  //       this.error = 'Failed to toggle category status';
-  //       console.error('Error toggling status:', err);
-  //     }
-  //   });
-  // }
 }

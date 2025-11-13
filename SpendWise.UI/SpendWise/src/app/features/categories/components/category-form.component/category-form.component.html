@@ -24,21 +24,11 @@
       />
     </div>
 
-    <div class="form-group">
-      <label for="type">Type *</label>
-      <select id="type" [(ngModel)]="categoryForm.type" name="type" required>
-        <option *ngFor="let type of categoryTypes" [value]="type.value">
-          {{ type.label }}
-        </option>
-      </select>
-    </div>
-
     <div class="preview-box">
       <h4>Preview</h4>
       <div class="category-preview">
         <div class="preview-info">
           <div class="preview-name">{{ categoryForm.name || 'Category Name' }}</div>
-          <div class="preview-type">{{ categoryForm.type === 0 ? 'Income' : 'Expense' }}</div>
         </div>
       </div>
     </div>
