@@ -57,6 +57,7 @@ public class TransactionsController : ControllerBase
                     Date = t.Date,
                     Amount = t.Amount,
                     Description = t.Description,
+                    TypeId = t.Type,
                     Type = t.Type.ToString(),
                     CategoryId = t.CategoryId,
                     CategoryName = t.Category.Name,
@@ -87,6 +88,7 @@ public class TransactionsController : ControllerBase
                     Date = t.Date,
                     Amount = t.Amount,
                     Description = t.Description,
+                    TypeId = t.Type,
                     Type = t.Type.ToString(),
                     CategoryId = t.CategoryId,
                     CategoryName = t.Category.Name,
@@ -142,6 +144,7 @@ public class TransactionsController : ControllerBase
                 Date = transaction.Date,
                 Amount = transaction.Amount,
                 Description = transaction.Description,
+                TypeId = transaction.Type,
                 Type = transaction.Type.ToString(),
                 CategoryId = transaction.CategoryId,
                 CategoryName = transaction.Category.Name

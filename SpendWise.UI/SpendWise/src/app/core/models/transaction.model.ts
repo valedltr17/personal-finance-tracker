@@ -3,17 +3,17 @@ export interface Transaction {
   amount: number;
   description: string;
   date: string;
+  typeId: number;
   type: TransactionType;
   categoryId: number;
   categoryName: string;
-  categoryIcon: string;
-  categoryColor: string;
 }
 
 export interface SaveTransactionRequest {
   amount: number;
   description: string;
-  date: string;
+  date: Date;
+  type: TransactionType;
   categoryId: number;
 }
 
@@ -21,8 +21,16 @@ export interface UpdateTransactionRequest {
   id: number;
   amount?: number;
   description?: string;
-  date?: string;
+  date?: Date;
+  type: TransactionType;
   categoryId?: number;
+}
+
+export interface TransactionFilter {
+  startDate?: Date;
+  endDate?: Date;
+  categoryId?: number;
+  type?: TransactionType;
 }
 
 export interface TransactionSummary {
@@ -33,6 +41,6 @@ export interface TransactionSummary {
 }
 
 export enum TransactionType {
-  Income = 0,
-  Expense = 1
+  Income = 1,
+  Expense = 2
 }

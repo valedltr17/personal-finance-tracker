@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {
-  TransactionType,
   SaveTransactionRequest,
   Transaction,
   TransactionSummary,
-  UpdateTransactionRequest
+  UpdateTransactionRequest, TransactionFilter
 } from '../models';
 import {Observable} from 'rxjs';
 
@@ -18,18 +17,15 @@ export class TransactionService {
   constructor(private http: HttpClient) { }
 
   // Get all transactions with filters
-  getTransactions(
-    startDate?: string,
-    endDate?: string,
-    categoryId?: string,
-    type?: TransactionType
-  ): Observable<Transaction[]> {
+  getTransactions(filter?: TransactionFilter): Observable<Transaction[]> {
     let params = new HttpParams();
 
-    if (startDate) params = params.set('startDate', startDate);
-    if (endDate) params = params.set('endDate', endDate);
-    if (categoryId) params = params.set('categoryId', categoryId.toString());
-    if (type !== undefined) params = params.set('type', type.toString());
+    if (filter) {
+      if (filter.startDate) params = params.set('startDate', filter.startDate.toISOString());
+      if (filter.endDate) params = params.set('endDate', filter.endDate.toISOString());
+      if (filter.categoryId !== undefined) params = params.set('categoryId', filter.categoryId.toString());
+      if (filter.type !== undefined) params = params.set('type', filter.type.toString());
+    }
 
     return this.http.get<Transaction[]>(this.apiUrl, { params });
   }
@@ -55,11 +51,11 @@ export class TransactionService {
   }
 
   // Get Transaction Summary
-  getTransactionSummary(startDate?: string, endDate?: string): Observable<TransactionSummary> {
+  getSummary(startDate?: Date, endDate?: Date): Observable<TransactionSummary> {
     let params = new HttpParams();
 
-    if (startDate) params = params.set('startDate', startDate);
-    if (endDate) params = params.set('endDate', endDate);
+    if (startDate) params = params.set('startDate', startDate.toISOString());
+    if (endDate) params = params.set('endDate', endDate.toISOString());
 
     return this.http.get<TransactionSummary>(`${this.apiUrl}/summary`, { params });
   }

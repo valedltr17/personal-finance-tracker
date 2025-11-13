@@ -1,0 +1,120 @@
+<div class="transaction-list-container">
+  <!-- Summary Cards -->
+  <div class="summary-cards">
+    <div class="summary-card income">
+      <h3>Total Income</h3>
+      <p class="amount">${{ summary.totalIncome | number:'1.2-2' }}</p>
+    </div>
+    <div class="summary-card expense">
+      <h3>Total Expenses</h3>
+      <p class="amount">${{ summary.totalExpenses | number:'1.2-2' }}</p>
+    </div>
+    <div class="summary-card balance" [class.negative]="summary.netBalance < 0">
+      <h3>Balance</h3>
+      <p class="amount">${{ summary.netBalance | number:'1.2-2' }}</p>
+    </div>
+    <div class="summary-card count">
+      <h3>Transactions</h3>
+      <p class="amount">{{ summary.transactionCount }}</p>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-section">
+    <h2>Filters</h2>
+    <div class="filters">
+      <div class="filter-group">
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" [(ngModel)]="startDate">
+      </div>
+
+      <div class="filter-group">
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" [(ngModel)]="endDate">
+      </div>
+
+      <div class="filter-group">
+        <label for="category">Category:</label>
+        <select id="category" [(ngModel)]="selectedCategoryId">
+          <option [ngValue]="null">All Categories</option>
+          <option *ngFor="let category of categories" [ngValue]="category.id">
+            {{ category.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="type">Type:</label>
+        <select id="type" [(ngModel)]="selectedType">
+          <option [ngValue]="null">All Types</option>
+          <option [ngValue]="TransactionType.Income">Income</option>
+          <option [ngValue]="TransactionType.Expense">Expense</option>
+        </select>
+      </div>
+
+      <div class="filter-actions">
+        <button class="btn btn-primary" (click)="applyFilters()">Apply Filters</button>
+        <button class="btn btn-secondary" (click)="clearFilters()">Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transaction List -->
+  <div class="transactions-section">
+    <div class="section-header">
+      <h2>Transactions</h2>
+      <button class="btn btn-primary" (click)="openAddForm()">+ Add Transaction</button>
+    </div>
+
+    <div *ngIf="transactions.length === 0" class="empty-state">
+      <p>No transactions found. Add your first transaction to get started!</p>
+    </div>
+
+    <div *ngIf="transactions.length > 0" class="transaction-grid">
+      <div *ngFor="let transaction of transactions" class="transaction-card">
+        <div class="transaction-header">
+          <div class="transaction-info">
+            <span
+              class="category-badge">
+              {{ transaction.categoryName }}
+            </span>
+            <span
+              class="type-badge"
+              [ngClass]="getTransactionTypeClass(transaction.type)">
+              {{ transaction.type }}
+            </span>
+          </div>
+          <div class="transaction-actions">
+            <button class="btn btn-warning" (click)="openEditForm(transaction)" title="Edit">
+              Edit
+            </button>
+            <button class="btn btn-danger" (click)="deleteTransaction(transaction.id)" title="Delete">
+              Delete
+            </button>
+          </div>
+        </div>
+
+        <div class="transaction-body">
+          <p class="description">{{ transaction.description }}</p>
+          <div class="transaction-footer">
+            <span class="date">{{ transaction.date | date:'medium' }}</span>
+            <span
+              class="amount"
+              [ngClass]="getTransactionTypeClass(transaction.typeId)">
+              {{ transaction.typeId === TransactionType.Income ? '+' : '-' }}${{ transaction.amount | number:'1.2-2' }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Transaction Form Modal -->
+<transaction-form
+  *ngIf="showForm"
+  [transaction]="editingTransaction"
+  [categories]="categories"
+  (saved)="onTransactionSaved()"
+  (cancelled)="closeForm()">
+</transaction-form>
