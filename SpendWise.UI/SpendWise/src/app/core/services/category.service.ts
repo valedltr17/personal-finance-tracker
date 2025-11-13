@@ -8,7 +8,7 @@ import {Category, SaveCategoryRequest, UpdateCategoryRequest} from '../models';
   providedIn: 'root',
 })
 export class CategoryService {
-  private apiUrl = `${environment.apiUrl}/categories`;
+  private apiUrl = `/api/categories`;
 
   constructor(private http: HttpClient) { }
 
