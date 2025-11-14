@@ -17,6 +17,7 @@ import {
 import {
   TransactionListComponent
 } from './features/transactions/components/transaction-list.component/transaction-list.component';
+import { DashboardComponent } from './features/dashboard/components/dashboard.component/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {
     CategoryFormComponent,
     TransactionListComponent,
     TransactionFormComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,

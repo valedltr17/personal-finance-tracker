@@ -1,0 +1,153 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Dashboard</h1>
+    <div class="date-filter">
+      <label>
+        Start Date:
+        <input type="date" [(ngModel)]="startDate" (change)="onDateChange()">
+      </label>
+      <label>
+        End Date:
+        <input type="date" [(ngModel)]="endDate" (change)="onDateChange()">
+      </label>
+      <button (click)="resetDates()">Current Month</button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading">
+    <p>Loading dashboard...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="error">
+    <p>{{ error }}</p>
+    <button (click)="loadDashboard()">Retry</button>
+  </div>
+
+  <!-- Dashboard Content -->
+  <div *ngIf="!loading && !error && summary" class="dashboard-content">
+
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+      <div class="card income">
+        <div class="card-content">
+          <h3>Total Income</h3>
+          <p class="amount">{{ summary.totalIncome | currency }}</p>
+        </div>
+      </div>
+
+      <div class="card expense">
+        <div class="card-content">
+          <h3>Total Expenses</h3>
+          <p class="amount">{{ summary.totalExpenses | currency }}</p>
+        </div>
+      </div>
+
+      <div class="card balance" [class.positive]="summary.netBalance >= 0" [class.negative]="summary.netBalance < 0">
+        <div class="card-content">
+          <h3>Net Balance</h3>
+          <p class="amount">{{ summary.netBalance | currency }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-section">
+
+      <!-- Monthly Trend Chart -->
+      <div class="chart-container">
+        <h2>Monthly Trend (Last 6 Months)</h2>
+        <canvas id="monthlyTrendChart"></canvas>
+      </div>
+
+      <!-- Category Breakdown Chart -->
+      <div class="chart-container">
+        <h2>Expenses by Category</h2>
+        <canvas id="categoryChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Category Breakdown Table -->
+    <div class="category-breakdown-section">
+      <h2>Category Breakdown</h2>
+      <div class="type-filter">
+        <button
+          [class.active]="selectedType === null"
+          (click)="filterByType(null)">
+          All
+        </button>
+        <button
+          [class.active]="selectedType === 'Income'"
+          (click)="filterByType('Income')">
+          Income
+        </button>
+        <button
+          [class.active]="selectedType === 'Expense'"
+          (click)="filterByType('Expense')">
+          Expenses
+        </button>
+      </div>
+
+      <table class="breakdown-table">
+        <thead>
+        <tr>
+          <th>Category</th>
+          <th>Type</th>
+          <th>Total Amount</th>
+          <th>Transactions</th>
+          <th>Average</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let category of categoryBreakdown">
+          <td>{{ category.categoryName }}</td>
+          <td>
+              <span class="badge" [class.income]="category.transactionType === 'Income'"
+                    [class.expense]="category.transactionType === 'Expense'">
+                {{ category.transactionType }}
+              </span>
+          </td>
+          <td class="amount">{{ category.totalAmount | currency }}</td>
+          <td>{{ category.transactionCount }}</td>
+          <td class="amount">{{ category.averageAmount | currency }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Recent Transactions -->
+    <div class="recent-transactions">
+      <h2>Recent Transactions</h2>
+      <table>
+        <thead>
+        <tr>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Category</th>
+          <th>Type</th>
+          <th>Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let transaction of summary.recentTransactions">
+          <td>{{ transaction.date | date:'short' }}</td>
+          <td>{{ transaction.description }}</td>
+          <td>{{ transaction.categoryName }}</td>
+          <td>
+              <span class="badge" [class.income]="transaction.type === TransactionType.Income"
+                    [class.expense]="transaction.type === TransactionType.Expense">
+                {{ transaction.type }}
+              </span>
+          </td>
+          <td class="amount" [class.income]="transaction.type === TransactionType.Income"
+              [class.expense]="transaction.type === TransactionType.Expense">
+            {{ transaction.amount | currency }}
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
