@@ -97,7 +97,7 @@ public class DashboardController : ControllerBase
 
         // GET: api/dashboard/monthly-trend
         [HttpGet("monthly-trend")]
-        public async Task<ActionResult<IEnumerable<object>>> GetMonthlyTrend([FromQuery] int months = 6)
+        public async Task<ActionResult<IEnumerable<MonthlyTrendDto>>> GetMonthlyTrend([FromQuery] int months = 6)
         {
             try
             {
@@ -109,7 +109,7 @@ public class DashboardController : ControllerBase
 
                 var monthlyData = transactions
                     .GroupBy(t => new { t.Date.Year, t.Date.Month })
-                    .Select(g => new
+                    .Select(g => new MonthlyTrendDto()
                     {
                         Year = g.Key.Year,
                         Month = g.Key.Month,
@@ -134,7 +134,7 @@ public class DashboardController : ControllerBase
 
         // GET: api/dashboard/category-breakdown
         [HttpGet("category-breakdown")]
-        public async Task<ActionResult<object>> GetCategoryBreakdown(
+        public async Task<ActionResult<CategorySummaryDto>> GetCategoryBreakdown(
             [FromQuery] TransactionType? type,
             [FromQuery] DateTime? startDate,
             [FromQuery] DateTime? endDate)
@@ -155,10 +155,11 @@ public class DashboardController : ControllerBase
 
                 var categoryBreakdown = await query
                     .GroupBy(t => new { t.Category.Name, t.Type })
-                    .Select(g => new
+                    .Select(g => new CategorySummaryDto()
                     {
                         CategoryName = g.Key.Name,
-                        Type = g.Key.Type.ToString(),
+                        TransactionTypeId = g.Key.Type,
+                        TransactionType = g.Key.Type.ToString(),
                         TotalAmount = g.Sum(t => t.Amount),
                         TransactionCount = g.Count(),
                         AverageAmount = g.Average(t => t.Amount)
