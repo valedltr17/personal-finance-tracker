@@ -1,4 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
+import {combineLatestWith} from 'rxjs';
 import {CategorySummary, DashboardSummary, MonthlyTrend, TransactionType} from '../../../../core/models';
 import {DashboardService} from '../../../../core/services';
 import {
@@ -76,46 +81,30 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.error = null;
 
-    this.dashboardService.getDashboardSummary({
-      startDate: this.startDate ? new Date(this.startDate) : undefined,
-      endDate: this.endDate ? new Date(this.endDate) : undefined,
-    })
+    const dashboardSummary$ = this.getDashboardSummaryObs();
+    const monthlyTrend$ = this.dashboardService.getMonthlyTrend(6);
+    const categoryBreakdown$ = this.getCategoryBreakdownObs();
+
+    dashboardSummary$.pipe(
+      combineLatestWith(monthlyTrend$, categoryBreakdown$),
+    )
       .subscribe({
-        next: (data) => {
-          this.summary = data;
+        next: (([summary, trend, breakdown]) => {
+          this.summary = summary;
+          this.monthlyTrend = trend;
+          this.categoryBreakdown = breakdown;
+
           this.loading = false;
 
-          setTimeout(() => this.createCategoryChart(), 0);
-        },
-        error: (err) => {
-          this.error = 'Failed to load dashboard summary';
-          this.loading = false;
-          console.log(err);
-        }
+          this.createCharts();
+        })
       });
-
-    this.dashboardService.getMonthlyTrend(6)
-      .subscribe({
-        next: (data) => {
-          this.monthlyTrend = data;
-
-          setTimeout(() => this.createMonthlyTrendChart(), 0);
-        },
-        error: (err) => {
-          console.log('Failed to load monthly trend', err);
-        }
-      });
-
-    this.loadCategoryBreakdown();
   }
 
   loadCategoryBreakdown(): void {
-    const type = !this.selectedType ? undefined : this.selectedType === 'Income' ? TransactionType.Income : TransactionType.Expense;
-    this.dashboardService.getCategoryBreakdown({
-      transactionType: type,
-      startDate: this.startDate ? new Date(this.startDate) : undefined,
-      endDate: this.endDate ? new Date(this.endDate) : undefined
-    })
+    const categoryBreakdown$ = this.getCategoryBreakdownObs();
+
+    categoryBreakdown$
       .subscribe({
         next: (data) => {
           this.categoryBreakdown = data;
@@ -141,6 +130,29 @@ export class DashboardComponent implements OnInit, OnDestroy {
   filterByType(type: string | null): void {
     this.selectedType = type;
     this.loadCategoryBreakdown();
+  }
+
+  private getDashboardSummaryObs() {
+    return this.dashboardService.getDashboardSummary({
+      startDate: this.startDate ? new Date(this.startDate) : undefined,
+      endDate: this.endDate ? new Date(this.endDate) : undefined,
+    });
+  }
+
+  private getCategoryBreakdownObs() {
+    const type = !this.selectedType ? undefined : this.selectedType === 'Income' ? TransactionType.Income : TransactionType.Expense;
+    return this.dashboardService.getCategoryBreakdown({
+      transactionType: type,
+      startDate: this.startDate ? new Date(this.startDate) : undefined,
+      endDate: this.endDate ? new Date(this.endDate) : undefined
+    });
+  }
+
+  private createCharts(): void {
+    setTimeout(() => {
+      this.createMonthlyTrendChart();
+      this.createCategoryChart();
+    }, 1);
   }
 
   private createMonthlyTrendChart(): void {
