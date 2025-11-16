@@ -33,8 +33,8 @@ export class TransactionFormComponent implements OnInit {
       this.formData = {
         amount: this.transaction.amount,
         description: this.transaction.description,
+        type: this.transaction.typeId,
         date: new Date(this.transaction.date).toISOString().split('T')[0],
-        type: this.transaction.type,
         categoryId: this.transaction.categoryId
       };
     } else {
