@@ -12,4 +12,5 @@ public class TransactionDto
     public string Type { get; set; } = string.Empty;
     public int CategoryId { get; set; }
     public string CategoryName { get; set; } = string.Empty;
+    public string CategoryColor { get; set; } = string.Empty;
 }

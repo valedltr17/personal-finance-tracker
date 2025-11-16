@@ -24,11 +24,35 @@
       />
     </div>
 
+    <div class="form-group">
+      <label>Color *</label>
+      <div class="d-flex">
+        <input
+          type="color"
+          [(ngModel)]="categoryForm.color"
+          name="color"
+          class="color-input"
+        />
+        <input
+          type="text"
+          id="color-hexcode"
+          [(ngModel)]="categoryForm.color"
+          name="color-hexcode"
+          placeholder="#cf554c"
+          style="margin-left: 1rem"
+          maxlength="7"
+          required
+        />
+      </div>
+    </div>
+
     <div class="preview-box">
       <h4>Preview</h4>
-      <div class="category-preview">
+      <div class="category-preview"
+           [ngStyle]="{'background-color': categoryForm.color + '40', 'color': categoryForm.color}">
         <div class="preview-info">
           <div class="preview-name">{{ categoryForm.name || 'Category Name' }}</div>
+          <small>HEX Code Color: {{ categoryForm.color || 'Color Code' }}</small>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {CategoryService} from '../../../../core/services';
-import {SaveCategoryRequest, UpdateCategoryRequest} from '../../../../core/models';
 import {ActivatedRoute, Router} from '@angular/router';
+import {SaveCategoryRequest, UpdateCategoryRequest} from '../../../../core/models';
+import {CategoryService} from '../../../../core/services';
 
 @Component({
   selector: 'app-category-form.component',
@@ -17,7 +17,10 @@ export class CategoryFormComponent implements OnInit {
 
   categoryForm = {
     name: '',
+    color: ''
   };
+
+  commonColors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'];
 
   constructor(
     private categoryService: CategoryService,
@@ -31,6 +34,8 @@ export class CategoryFormComponent implements OnInit {
       this.categoryId = +id;
       this.isEditMode = true;
       this.loadCategory();
+    } else {
+      this.categoryForm.color = this.generateRandomHexColor();
     }
   }
 
@@ -41,7 +46,8 @@ export class CategoryFormComponent implements OnInit {
     this.categoryService.getCategory(this.categoryId).subscribe({
       next: (data) => {
         this.categoryForm = {
-          name: data.name
+          name: data.name,
+          color: data.color
         };
         this.loading = false;
       },
@@ -61,11 +67,13 @@ export class CategoryFormComponent implements OnInit {
 
     this.loading = true;
     this.error = null;
+    const randomColor = this.generateRandomHexColor();
 
     if (this.isEditMode && this.categoryId) {
       const updateDto: UpdateCategoryRequest = {
         id: this.categoryId,
-        name: this.categoryForm.name
+        name: this.categoryForm.name,
+        color: this.categoryForm.color
       };
 
       this.categoryService.updateCategory(updateDto).subscribe({
@@ -80,7 +88,8 @@ export class CategoryFormComponent implements OnInit {
       });
     } else {
       const createDto: SaveCategoryRequest = {
-        name: this.categoryForm.name
+        name: this.categoryForm.name,
+        color: this.categoryForm.color
       };
 
       this.categoryService.createCategory(createDto).subscribe({
@@ -98,5 +107,29 @@ export class CategoryFormComponent implements OnInit {
 
   cancel(): void {
     this.router.navigate(['/categories']);
+  }
+
+  selectColor(color: string): void {
+    this.categoryForm.color = color;
+  }
+
+  private generateRandomHexColor(): string {
+    // Generate a random number between 0 and 16777215 (FFFFFF in hex).
+    // Multiplying by 0xffffff ensures a number within the 24-bit range.
+    // Multiplying by 1000000 adds more randomness and ensures a larger number for slicing.
+    const randomNum = Math.floor(Math.random() * 0xffffff * 1000000);
+
+    // Convert the number to a hexadecimal string.
+    let hexColor = randomNum.toString(16);
+
+    // Ensure the hex string is 6 characters long by padding with leading zeros if necessary.
+    // This is crucial because `toString(16)` might produce shorter strings for smaller numbers.
+    hexColor = hexColor.slice(0, 6); // Take only the first 6 characters to avoid longer results.
+    while (hexColor.length < 6) {
+      hexColor = '0' + hexColor;
+    }
+
+    // Prepend '#' to make it a valid CSS hex color code.
+    return `#${hexColor}`;
   }
 }

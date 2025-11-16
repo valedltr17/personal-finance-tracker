@@ -31,7 +31,8 @@ public class CategoriesController : ControllerBase
                 .Select(c => new CategoryDto()
                 {
                     Id = c.Id,
-                    Name = c.Name
+                    Name = c.Name,
+                    Color = c.Color,
                 })
                 .ToListAsync();
 
@@ -55,7 +56,8 @@ public class CategoriesController : ControllerBase
                 .Select(c => new CategoryDto()
                 {
                     Id = c.Id,
-                    Name = c.Name
+                    Name = c.Name,
+                    Color = c.Color
                 })
                 .FirstOrDefaultAsync();
 
@@ -90,6 +92,7 @@ public class CategoriesController : ControllerBase
             var category = new Category()
             {
                 Name = request.Name,
+                Color = request.Color,
             };
 
             _context.Categories.Add(category);
@@ -98,7 +101,8 @@ public class CategoriesController : ControllerBase
             var result = new CategoryDto()
             {
                 Id = category.Id,
-                Name = category.Name
+                Name = category.Name,
+                Color = category.Color
             };
 
             return CreatedAtAction(nameof(GetCategory), new { id = category.Id }, result);
@@ -133,6 +137,7 @@ public class CategoriesController : ControllerBase
             }
             
             category.Name = request.Name;
+            category.Color = request.Color;
             
             await _context.SaveChangesAsync();
 

@@ -61,6 +61,7 @@ public class TransactionsController : ControllerBase
                     Type = t.Type.ToString(),
                     CategoryId = t.CategoryId,
                     CategoryName = t.Category.Name,
+                    CategoryColor = t.Category.Color,
                 })
                 .ToListAsync();
         
@@ -92,6 +93,7 @@ public class TransactionsController : ControllerBase
                     Type = t.Type.ToString(),
                     CategoryId = t.CategoryId,
                     CategoryName = t.Category.Name,
+                    CategoryColor = t.Category.Color
                 })
                 .FirstOrDefaultAsync();
 
@@ -147,7 +149,8 @@ public class TransactionsController : ControllerBase
                 TypeId = transaction.Type,
                 Type = transaction.Type.ToString(),
                 CategoryId = transaction.CategoryId,
-                CategoryName = transaction.Category.Name
+                CategoryName = transaction.Category.Name,
+                CategoryColor = transaction.Category.Color
             };
 
             return CreatedAtAction(nameof(GetTransaction), new { id = transaction.Id }, result);

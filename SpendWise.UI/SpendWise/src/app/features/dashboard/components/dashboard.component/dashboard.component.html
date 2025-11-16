@@ -132,7 +132,14 @@
         <tr *ngFor="let transaction of summary.recentTransactions">
           <td>{{ transaction.date | date:'short' }}</td>
           <td>{{ transaction.description }}</td>
-          <td>{{ transaction.categoryName }}</td>
+<!--          <td>{{ transaction.categoryName }}</td>-->
+          <td>
+              <span
+                class="badge"
+                [ngStyle]="{'background-color': transaction.categoryColor + '40', 'color': transaction.categoryColor}">
+                {{ transaction.categoryName }}
+              </span>
+          </td>
           <td>
               <span class="badge" [class.income]="transaction.type === TransactionType.Income"
                     [class.expense]="transaction.type === TransactionType.Expense">

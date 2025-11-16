@@ -19,6 +19,7 @@ export interface DashboardSummary {
 
 export interface CategoryExpenses {
   categoryName: string;
+  categoryColor: string;
   amount: number;
   percentage: number;
 }
@@ -34,6 +35,7 @@ export interface MonthlyTrend {
 
 export interface CategorySummary {
   categoryName: string;
+  categoryColor: string;
   transactionTypeId: TransactionType;
   transactionType: string;
   totalAmount: number;

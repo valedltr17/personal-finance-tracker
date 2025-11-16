@@ -51,10 +51,11 @@ public class DashboardController : ControllerBase
                 // Group expenses by category
                 var expensesByCategory = transactions
                     .Where(t => t.Type == TransactionType.Expense)
-                    .GroupBy(t => t.Category.Name)
+                    .GroupBy(t => new { t.Category.Name, t.Category.Color })
                     .Select(g => new ExpenseByCategoryDto
                     {
-                        CategoryName = g.Key,
+                        CategoryName = g.Key.Name,
+                        CategoryColor = g.Key.Color,
                         Amount = g.Sum(t => t.Amount),
                         Percentage = totalExpenses > 0 ? (g.Sum(t => t.Amount) / totalExpenses) * 100 : 0
                     })
@@ -73,7 +74,8 @@ public class DashboardController : ControllerBase
                         Description = t.Description,
                         Type = t.Type.ToString(),
                         CategoryId = t.CategoryId,
-                        CategoryName = t.Category.Name
+                        CategoryName = t.Category.Name,
+                        CategoryColor = t.Category.Color
                     })
                     .ToList();
 
@@ -154,10 +156,11 @@ public class DashboardController : ControllerBase
                 }
 
                 var categoryBreakdown = await query
-                    .GroupBy(t => new { t.Category.Name, t.Type })
+                    .GroupBy(t => new { t.Category.Name, t.Type, t.Category.Color })
                     .Select(g => new CategorySummaryDto()
                     {
                         CategoryName = g.Key.Name,
+                        CategoryColor = g.Key.Color,
                         TransactionTypeId = g.Key.Type,
                         TransactionType = g.Key.Type.ToString(),
                         TotalAmount = g.Sum(t => t.Amount),

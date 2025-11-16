@@ -75,7 +75,9 @@
         <div class="transaction-header">
           <div class="transaction-info">
             <span
-              class="category-badge">
+              class="category-badge"
+              [ngStyle]="{'background-color': transaction.categoryColor + '40', 'color': transaction.categoryColor}"
+            >
               {{ transaction.categoryName }}
             </span>
             <span

@@ -17,6 +17,8 @@
   <div *ngIf="!loading && !error" class="categories-grid">
     <div *ngFor="let category of categories" class="category-card">
       <div class="category-header">
+        <div class="category-color-preview" [style.backgroundColor]="category.color">
+        </div>
         <div class="category-info">
           <h3>{{ category.name }}</h3>
         </div>

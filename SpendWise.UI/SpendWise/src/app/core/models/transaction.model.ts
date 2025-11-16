@@ -7,6 +7,7 @@ export interface Transaction {
   type: TransactionType;
   categoryId: number;
   categoryName: string;
+  categoryColor: string;
 }
 
 export interface SaveTransactionRequest {

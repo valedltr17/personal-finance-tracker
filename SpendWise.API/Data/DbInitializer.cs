@@ -16,26 +16,26 @@ public class DbInitializer
         var categories = new Category[]
         {
             // Expenses Categories
-            new Category() { Name = "Groceries" },
-            new Category() { Name = "Transportation" },
-            new Category() { Name = "Entertainment" },
-            new Category() { Name = "Utilities" },
-            new Category() { Name = "Healthcare" },
-            new Category() { Name = "Dining Out" },
-            new Category() { Name = "Shopping" },
-            new Category() { Name = "Education" },
-            new Category() { Name = "Housing" },
-            new Category() { Name = "Insurance" },
+            new Category() { Name = "Groceries", Color = "#4ccf73" },
+            new Category() { Name = "Transportation", Color = "#cf554c" },
+            new Category() { Name = "Entertainment", Color = "#cf554c" },
+            new Category() { Name = "Utilities", Color = "#6f4ccf" },
+            new Category() { Name = "Healthcare", Color = "#4cbbcf" },
+            new Category() { Name = "Dining Out", Color = "#cf4c92" },
+            new Category() { Name = "Shopping", Color = "#cf4c78" },
+            new Category() { Name = "Education", Color = "#4c68cf" },
+            new Category() { Name = "Housing", Color = "#4c94cf" },
+            new Category() { Name = "Insurance", Color = "#87cf4c" },
 
             // Income Categories
-            new Category() { Name = "Salary" },
-            new Category() { Name = "Freelance" },
-            new Category() { Name = "Investments" },
-            new Category() { Name = "Gifts" },
+            new Category() { Name = "Salary", Color = "#4ccf53" },
+            new Category() { Name = "Freelance", Color = "#b7cf4c" },
+            new Category() { Name = "Investments", Color = "#cfac4c" },
+            new Category() { Name = "Gifts", Color = "#cf4cae" },
 
             // Others
-            new Category() { Name = "Other Income" },
-            new Category() { Name = "Other Expense" }
+            new Category() { Name = "Other Income", Color = "#4ccfaa" },
+            new Category() { Name = "Other Expense", Color = "#cf4c62" }
         };
         
         context.Categories.AddRange(categories);

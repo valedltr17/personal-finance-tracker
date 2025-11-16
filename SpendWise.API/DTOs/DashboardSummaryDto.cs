@@ -14,6 +14,7 @@ public class DashboardSummaryDto
 public class ExpenseByCategoryDto
 {
     public string CategoryName { get; set; } = string.Empty;
+    public string CategoryColor { get; set; } = string.Empty;
     public decimal Amount { get; set; }
     public decimal Percentage { get; set; }
 }
@@ -31,6 +32,7 @@ public class MonthlyTrendDto
 public class CategorySummaryDto
 {
     public string CategoryName { get; set; } = string.Empty;
+    public string CategoryColor { get; set; } = string.Empty;
     public TransactionType TransactionTypeId { get; set; }
     public string TransactionType { get; set; }
     public decimal TotalAmount { get; set; }
